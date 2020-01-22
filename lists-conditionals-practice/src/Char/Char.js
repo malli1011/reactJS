@@ -1,5 +1,6 @@
 
 import React from 'react';
+import Radium from 'radium';
 
 
 const char = (props)=>{
@@ -8,7 +9,11 @@ const style={
     padding:'16px',
     margin:'16',
     border:'1px solid black',
-    textAlign:'center'
+    textAlign:'center',
+    ':hover':{
+        backgroundColor:'lightgreen'
+
+    }
 };
 
     return (
@@ -18,4 +23,4 @@ const style={
     );
 }
 
-export default char;
+export default Radium(char);
