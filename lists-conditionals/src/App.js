@@ -1,9 +1,22 @@
 import React, { Component } from 'react';
+import styled from 'styled-components'
 import './App.css';
 import Person from './Person/Person';
 
+const  Button= styled.button`
+background-color: white;
+font: inherit;
+padding: 8px;
+cursor: pointer;
+&:hover{
+  background-color:lightgreen;
+  color:black
+}
+`;
 
 class App extends Component {
+
+ 
   state = {
     persons: [
       {id:"1", name: 'Max', age: 28 },
@@ -39,14 +52,7 @@ class App extends Component {
   }
 
   render () {
-    const style = {
-      backgroundColor: 'white',
-      font: 'inherit',
-      border: '1px solid blue',
-      padding: '8px',
-      cursor: 'pointer'
-    };
-
+    
     let persons = null;
 
     if ( this.state.showPersons ) {
@@ -71,9 +77,8 @@ class App extends Component {
       <div className="App">
         <h1>Hi, I'm a React App</h1>
         <p>This is really working!</p>
-        <button
-          style={style}
-          onClick={this.togglePersonsHandler}>Toggle Persons</button>
+        <Button
+          onClick={this.togglePersonsHandler}>Toggle Persons</Button>
         {persons}
       </div>
     );
