@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
-import Person from './Person/Person';
+import Persons from '../Persons/Persons';
+import Cockpit from '../Cockpit/Cockpit';
 
 
 class App extends Component {
@@ -24,7 +25,7 @@ class App extends Component {
 
     
   nameChangedHandler = (event,id) => {
-    const personIndex = this.state.persons.findIndex(p=>p.id==id);
+    const personIndex = this.state.persons.findIndex(p=>p.id===id);
     const tempPerson =this.state.persons[personIndex];
     const person ={...tempPerson};
     person.name = event.target.value;
@@ -39,41 +40,19 @@ class App extends Component {
   }
 
   render () {
-    const style = {
-      backgroundColor: 'white',
-      font: 'inherit',
-      border: '1px solid blue',
-      padding: '8px',
-      cursor: 'pointer'
-    };
-
-    let persons = null;
+   let persons = null;
 
     if ( this.state.showPersons ) {
-      persons = (
-        <div>
-         {
-           this.state.persons.map((person, index)=>{
-             return <Person
-              key={person.id}
-              click ={()=> this.deletePersonHandler(index)}
-              name={person.name}
-              age={person.age}
-              changed={(event)=>this.nameChangedHandler(event,person.id)}
-              />
-           })
-         }
-        </div>
-      );
+      persons = 
+          <Persons persons = {this.state.persons}
+          click={this.deletePersonHandler}
+          changed={this.nameChangedHandler}></Persons>
+       
     }
 
     return (
       <div className="App">
-        <h1>Hi, I'm a React App</h1>
-        <p>This is really working!</p>
-        <button
-          style={style}
-          onClick={this.togglePersonsHandler}>Toggle Persons</button>
+        <Cockpit toggle={this.togglePersonsHandler}></Cockpit>
         {persons}
       </div>
     );
