@@ -1,6 +1,5 @@
 import React from 'react'
 import BuildControl from './BuildControl/BuildControl';
-import { checkPropTypes } from 'prop-types';
 
 const buildControls = (props) => {
 
@@ -22,7 +21,7 @@ const buildControls = (props) => {
                 deleteHandler={()=>props.ingredientDelete(ctrl.type)}
                 disabledInfo = {props.disabledInfo[ctrl.type]}/>
             )}
-            <button className="btn btn-success" disabled={!props.purchasable}>CHECK OUT</button>
+            <button className="btn btn-success" disabled={!props.purchasable} onClick={props.ordered}>CHECK OUT</button>
         </div>
     );
 }
