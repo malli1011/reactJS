@@ -1,20 +1,19 @@
-import React, { Fragment } from 'react';
+import React,{Fragment} from 'react';
+
 import Logo from '../../Logo/Logo';
 import NavigationItems from '../NavigationItems/NavigationItems';
-import BackDrop from '../../UI/Modal/Backdrop/BackDrop';
 import classes from './SideDrawer.module.css';
+import Backdrop from '../../UI/Backdrop/Backdrop';
 
-
-const sideDrawer = (props) => {
-
-    let attachedclasses = [classes.SideDrawer, classes.Close];
-    if(props.open){
-        attachedclasses = [classes.SideDrawer, classes.Open];
+const sideDrawer = ( props ) => {
+    let attachedClasses = [classes.SideDrawer, classes.Close];
+    if (props.open) {
+        attachedClasses = [classes.SideDrawer, classes.Open];
     }
     return (
         <Fragment>
-            <BackDrop show={props.open} cancle={props.closed}/>
-            <div className={attachedclasses.join(' ')}>
+            <Backdrop show={props.open} clicked={props.closed}/>
+            <div className={attachedClasses.join(' ')}>
                 <div className={classes.Logo}>
                     <Logo />
                 </div>
@@ -23,8 +22,7 @@ const sideDrawer = (props) => {
                 </nav>
             </div>
         </Fragment>
-    )
-
+    );
 };
 
 export default sideDrawer;
