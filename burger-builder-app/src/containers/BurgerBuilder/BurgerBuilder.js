@@ -91,7 +91,7 @@ class BurgerBuilder extends Component {
             }
         }
         return (
-            <div className="container">
+            <div>
                 <Modal show={this.state.isOrdered} modalClosed={this.purchaseCancel}>
                     <OrderSummary 
                     ingredients={this.state.ingredients}
