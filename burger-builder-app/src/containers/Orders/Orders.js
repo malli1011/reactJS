@@ -10,27 +10,27 @@ class Orders extends Component {
         loading: true
     }
 
-    componentDidMount(){
+    componentDidMount() {
         axios.get('/orders.json')
-        .then(res =>{
-            const fetchedOrders = [];
-            for(let key in res.data){
-                fetchedOrders.push({
-                    id:key,
-                    ...res.data[key]
-                })
-            }
-            this.setState({loading:false,orders:fetchedOrders});
-        }).catch(err => { 
-            this.setState({loading:false})
-        })
-       
+            .then(res => {
+                const fetchedOrders = [];
+                for (let key in res.data) {
+                    fetchedOrders.push({
+                        id: key,
+                        ...res.data[key]
+                    })
+                }
+                this.setState({ loading: false, orders: fetchedOrders });
+            }).catch(err => {
+                this.setState({ loading: false })
+            })
+
     }
 
     render() {
         console.log(this.state.orders);
-        const orders = this.state.orders.map(order =>{
-           return <Order key={order.id} ingredients={order.ingredients} price={order.price}/>
+        const orders = this.state.orders.map(order => {
+            return <Order key={order.id} ingredients={order.ingredients} price={order.price} />
         })
 
         return (
@@ -41,4 +41,4 @@ class Orders extends Component {
     }
 }
 
-export default withErrorHandler(Orders,axios);
+export default withErrorHandler(Orders, axios);
