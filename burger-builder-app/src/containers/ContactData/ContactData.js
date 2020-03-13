@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
 
 import Button from '../../components/UI/Button/Button';
 import axios from '../../axios';
 import classes from './ContactData.module.css';
 import Spinner from '../../components/UI/Spinner/Spinner';
 import Input from '../../components/UI/Input/Input';
+import WithErrorHandlar from '../../hoc/withErrorHandler/withErrorHandler';
+import * as burgerBuilderactions from '../../store/actions/index';
 
 
 class ContactData extends Component {
@@ -23,7 +25,7 @@ class ContactData extends Component {
                     required: true
                 },
                 valid: false,
-                touched:false
+                touched: false
             },
             street: {
                 elementType: 'input',
@@ -36,7 +38,7 @@ class ContactData extends Component {
                     required: true
                 },
                 valid: false,
-                touched:false
+                touched: false
             },
             country: {
                 elementType: 'input',
@@ -49,7 +51,7 @@ class ContactData extends Component {
                     required: true
                 },
                 valid: false,
-                touched:false
+                touched: false
             },
             zipcode: {
                 elementType: 'input',
@@ -64,7 +66,7 @@ class ContactData extends Component {
                     maxLength: 6
                 },
                 valid: false,
-                touched:false
+                touched: false
             },
             email: {
                 elementType: 'input',
@@ -77,7 +79,7 @@ class ContactData extends Component {
                     required: true
                 },
                 valid: false,
-                touched:false
+                touched: false
             },
             deliveryMethod: {
                 elementType: 'select',
@@ -90,9 +92,8 @@ class ContactData extends Component {
                 valid: true,
             }
         },
-        formIsValid:false,
-        loading: false
-
+        formIsValid: false,
+        
     }
 
     checkValidity(value, rules) {
@@ -121,16 +122,15 @@ class ContactData extends Component {
         updatedOrderForm[inputIdentifier] = updatedFormElement;
 
         let formIsValid = true;
-        for(let inputIdentifier in updatedOrderForm){
-            formIsValid = updatedOrderForm[inputIdentifier].valid&&formIsValid;
+        for (let inputIdentifier in updatedOrderForm) {
+            formIsValid = updatedOrderForm[inputIdentifier].valid && formIsValid;
         }
-        this.setState({ orderForm: updatedOrderForm,formIsValid:formIsValid });
+        this.setState({ orderForm: updatedOrderForm, formIsValid: formIsValid });
 
     }
 
     orderHandler = (event) => {
         event.preventDefault();
-        this.setState({ lodading: true });
         const formData = {};
 
         for (let formElementIdentifier in this.state.orderForm) {
@@ -141,13 +141,7 @@ class ContactData extends Component {
             price: this.props.price,
             orderData: formData
         }
-        axios.post('/orders.json', order)
-            .then(res => {
-                this.setState({ lodading: false });
-                this.props.history.replace("/");
-            })
-            .catch(err => this.setState({ lodading: false }));
-
+        this.props.onOrderBurger(order)
     }
 
     render() {
@@ -173,9 +167,9 @@ class ContactData extends Component {
                     touched={element.config.touched}
                     changed={(event) => this.inputChangeHnadler(event, element.id)} />
             ))}
-            <Button btnType="Success" disabled ={!this.state.formIsValid}>ORDER</Button>
+            <Button btnType="Success" disabled={!this.state.formIsValid}>ORDER</Button>
         </form>);
-        if (this.state.loading) {
+        if (this.props.loading) {
             form = <Spinner />
         }
         return (
@@ -187,11 +181,18 @@ class ContactData extends Component {
     }
 }
 
-const mapStateToProps = state =>{
-    return{
-        ings:state.ingredients,
-        price:state.totalPrice
+const mapStateToProps = state => {
+    return {
+        ings: state.burgerBuilder.ingredients,
+        price: state.burgerBuilder.totalPrice,
+        loading: state.order.loading
     }
 }
 
-export default connect(mapStateToProps)(ContactData);
+const mapDispatchToProps = dispatch => {
+    return {
+        onOrderBurger: (orderData) =>dispatch(burgerBuilderactions.purchaseBurger(orderData))
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(WithErrorHandlar(ContactData, axios));
