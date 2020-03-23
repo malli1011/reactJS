@@ -10,6 +10,7 @@ import WithErrorHandlar from '../../hoc/withErrorHandler/withErrorHandler';
 import * as burgerBuilderactions from '../../store/actions/index';
 
 
+
 class ContactData extends Component {
 
     state = {
@@ -141,7 +142,8 @@ class ContactData extends Component {
             price: this.props.price,
             orderData: formData
         }
-        this.props.onOrderBurger(order)
+        this.props.onOrderBurger(order);
+       
     }
 
     render() {
@@ -172,6 +174,7 @@ class ContactData extends Component {
         if (this.props.loading) {
             form = <Spinner />
         }
+        
         return (
             <div className={classes.ContactData}>
                 <h4>Enter Contact Details.</h4>
@@ -186,6 +189,7 @@ const mapStateToProps = state => {
         ings: state.burgerBuilder.ingredients,
         price: state.burgerBuilder.totalPrice,
         loading: state.order.loading
+        
     }
 }
 
