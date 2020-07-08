@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
-import classes from './App.module.css'
+import Layout from './components/Layout/Layout';
+import BurgerBuilder from './containers/BurgerBuilder/BurgerBuilder';
+import classes from './App.module.css';
 
 class App extends Component {
   state = {
@@ -13,9 +15,12 @@ class App extends Component {
   render() {
     return (
       <div className={classes.App}>
-        <h2>Hello World</h2>
-        <input type="text" onChange={this.clicked} />
-        <p>Enterd Value : {this.state.input}</p>
+        <Layout>
+          <h2>Hello World</h2>
+          <BurgerBuilder/>
+          <input type="text" onChange={this.clicked} />
+          <p>Enterd Value : {this.state.input}</p>
+        </Layout>
       </div>
     );
   }
